@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    pre{
+        background-color: green;
+    }
+</style>
+<body> 
+    <h2>Q-1=> Create 2 objects - parent and child. Attach methods to parent and use those methods in child object using parents prototype.
+        <pre>ans1:-
+            function Parent(name) {
+                this.name = name;
+              }
+              
+              Parent.prototype.sayHello = function() {
+                console.log(`Hello, my name is ${this.name}.`);
+              };
+              
+              function Child(name, age) {
+                Parent.call(this, name);
+                this.age = age;
+              }
+              
+              Child.prototype = Object.create(Parent.prototype);
+              
+              Child.prototype.introduce = function() {
+                console.log(`I am ${this.name} and I am ${this.age} years old.`);
+              };
+              
+              const parentObj = new Parent("Parent");
+              const childObj = new Child("Child", 5);
+              
+              parentObj.sayHello(); 
+              childObj.sayHello(); 
+              childObj.introduce();
+        </pre>
+    </h2>
+    <h2>Q-2=>Write code to explain prototype chaining
+        <pre>ans2:-
+            function Parent(name) {
+                this.name = name;
+              }
+              
+              Parent.prototype.greet = function() {
+                console.log(`Hello, my name is ${this.name}`);
+              };
+              
+              function Child(name, age) {
+                Parent.call(this, name);
+                this.age = age;
+              }
+              
+              Child.prototype = Object.create(Parent.prototype);
+              Child.prototype.constructor = Child;
+              
+              Child.prototype.showAge = function() {
+                console.log(`${this.name} is ${this.age} years old.`);
+              };
+              
+              const parentObj = new Parent('John');
+              const childObj = new Child('Alice', 5);
+              
+              parentObj.greet(); 
+              childObj.greet();  
+              childObj.showAge(); 
+        </pre>
+    </h2>
+    <h2>Q-3 Add a method to calculate sum of all elements in Array in array's protype, use that method to calculate sum for multiple arrays
+        <pre>ans3:-
+            function calculateArraySum() {
+                let sum = 0;
+                for (let i = 0; i < this.length; i++) {
+                  sum += this[i];
+                }
+                return sum;
+              }
+              Array.prototype.calculateSum = calculateArraySum;
+              const arr1 = [1, 2, 3, 4, 5];
+              const arr2 = [10, 20, 30];
+              const arr3 = [2, 4, 6, 8, 10];
+              
+              console.log(arr1.calculateSum()); // Output: 15 (1 + 2 + 3 + 4 + 5)
+              console.log(arr2.calculateSum()); // Output: 60 (10 + 20 + 30)
+              console.log(arr3.calculateSum()); // Output: 30 (2 + 4 + 6 + 8 + 10)              
+        </pre>
+    </h2>
+    <h2>Q-4 Write a JavaScript function to retrieve all the names of object's own and inherited properties.
+        <pre>ans4:-
+            function getAllPropertyNames(obj) {
+                const propertyNames = [];
+              
+                function getAllPropertyNamesRecursive(obj) {
+                  if (obj === null || obj === undefined) return;
+              
+                  const ownPropertyNames = Object.getOwnPropertyNames(obj);
+                  propertyNames.push(...ownPropertyNames);
+              
+                  const prototype = Object.getPrototypeOf(obj);
+              
+                  getAllPropertyNamesRecursive(prototype);
+                }
+              
+                getAllPropertyNamesRecursive(obj);
+              
+                return Array.from(new Set(propertyNames));
+              }
+              
+        </pre>
+    </h2>
+</body>
+</html>
